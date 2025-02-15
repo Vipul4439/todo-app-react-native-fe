@@ -23,6 +23,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1bd29720-6907-4419-a1cf-c22fc21202e4"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1bd29720-6907-4419-a1cf-c22fc21202e4"
+    },
+    "owner": "vipul-expo"
   }
 }
