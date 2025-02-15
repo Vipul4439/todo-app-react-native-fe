@@ -18,8 +18,12 @@ const App: React.FC = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator id={undefined}>
-          <Stack.Screen name="Todo" component={Todo} />
-          <Stack.Screen name="TaskDetails" component={TaskDetails} />
+          <Stack.Screen name="Goal" component={Todo} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TaskDetails"
+            component={TaskDetails}
+            options={{ headerTitle: "Goal Details" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

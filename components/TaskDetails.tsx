@@ -22,8 +22,6 @@ const TaskDetails: React.FC<Props> = ({ route }) => {
   const { task, onUpdate } = route.params;
   const [loading, setLoading] = useState(false);
 
-  console.log("task", task);
-
   const handleToggleComplete = () => {
     setLoading(true);
     onUpdate(task.id, task);

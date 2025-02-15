@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { RootState } from "../redux/store";
 import { LinearGradient } from "expo-linear-gradient";
+import { Alert, Image } from "react-native";
+import Logo from "../assets/logo.png";
 
 import {
   SafeAreaView,
@@ -37,6 +39,7 @@ const Todo = () => {
   const addGoalHandler = async () => {
     if (goal.trim()) {
       setLoading(true);
+
       setTimeout(async () => {
         await dispatch(createTodo({ title: goal, description: "New task", completed: false }));
         await dispatch(getTodos());
@@ -63,12 +66,24 @@ const Todo = () => {
   };
 
   const deleteHandler = (id: string) => {
-    setLoading(true);
-    setTimeout(async () => {
-      await dispatch(removeTodo(id));
-      await dispatch(getTodos());
-      setLoading(false);
-    }, 800);
+    Alert.alert("Confirm Delete", "Are you sure you want to delete this goal?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: async () => {
+          setLoading(true);
+          setTimeout(async () => {
+            await dispatch(removeTodo(id));
+            await dispatch(getTodos());
+            setLoading(false);
+          }, 800);
+        },
+        style: "destructive",
+      },
+    ]);
   };
 
   const updateGoalCompleted = async (id: string, todoItem: ITodo) => {
@@ -92,6 +107,22 @@ const Todo = () => {
   return (
     <LinearGradient colors={["#F8BBD0", "#007AFF"]} style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
+        {loading && (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color="#fff" />
+          </View>
+        )}
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 20,
+            height: 70,
+          }}
+        >
+          <Image source={Logo} style={{ width: 110, height: 42 }} />
+        </View>
+
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Enter goal"
@@ -103,11 +134,7 @@ const Todo = () => {
             returnKeyType="done"
           />
           <TouchableOpacity style={styles.button} onPress={addGoalHandler} disabled={loading}>
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.buttonText}>Add Goal</Text>
-            )}
+            <Text style={styles.buttonText}>Add Goal</Text>
           </TouchableOpacity>
         </View>
 
@@ -174,6 +201,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  loaderContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    zIndex: 10,
+  },
+
   inputContainer: {
     padding: 20,
     backgroundColor: "rgba(255, 255, 255, 0.3)",
@@ -190,21 +229,30 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#FF4081",
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
     shadowColor: "#FF4081",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
+    flexDirection: "row",
   },
 
   buttonText: {
+    fontSize: 14,
+    fontWeight: "700",
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 25,
+    backgroundColor: "#f852cc",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    overflow: "hidden",
   },
 
   goalCard: {
