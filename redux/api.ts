@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/todos";
+const API_URL = "https://todo-django-be.onrender.com/todos";
 
 export interface ITodo {
   id?: string;
