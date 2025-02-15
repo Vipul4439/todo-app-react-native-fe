@@ -6,12 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import store from "./redux/store";
 import Todo from "./components/Todo";
 import TaskDetails from "./components/TaskDetails";
-import { Goal } from "./redux/goalSlice";
+import { ITodo } from "./redux/api";
 const Stack = createStackNavigator();
 
 export type RootStackParamList = {
   Todo: undefined;
-  TaskDetails: { task: Goal };
+  TaskDetails: { task: ITodo; onUpdate: (id: string, todoItem: ITodo) => void };
 };
 const App: React.FC = () => {
   return (

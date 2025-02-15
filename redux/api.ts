@@ -2,7 +2,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000/todos";
 
-export interface Todo {
+export interface ITodo {
+  id?: string;
   title: string;
   description: string;
   completed: boolean;
@@ -13,12 +14,12 @@ export const fetchTodos = async () => {
   return response.data;
 };
 
-export const addTodo = async (todo: Todo) => {
+export const addTodo = async (todo: ITodo) => {
   const response = await axios.post(API_URL + "/", todo);
   return response.data;
 };
 
-export const updateTodo = async (todoId: string, updatedTodo: Todo) => {
+export const updateTodo = async (todoId: string, updatedTodo: ITodo) => {
   console.log("todoId", todoId, "updatedTodo", updatedTodo);
   const response = await axios.put(`${API_URL}/${todoId}`, updatedTodo);
   return response.data;

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchTodos, addTodo, updateTodo, deleteTodo, Todo } from "./api";
+import { fetchTodos, addTodo, updateTodo, deleteTodo, ITodo } from "./api";
 
 export const getTodos = createAsyncThunk("todos/getTodos", async () => {
   return await fetchTodos();
 });
 
-export const createTodo = createAsyncThunk("todos/createTodo", async (todo: Todo) => {
+export const createTodo = createAsyncThunk("todos/createTodo", async (todo: ITodo) => {
   return await addTodo(todo);
 });
 
